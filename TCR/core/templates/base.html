@@ -6,73 +6,59 @@
   <title>TCR - {% block title %}{% endblock title %}</title>
 
   <!-- Bootstrap CSS (CDN) -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-  >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
-  <!-- Vlastní CSS soubor (pokud chceš) -->
-  <!-- <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> -->
+  <!-- Vlastní CSS soubor -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
   {% block extra_head %}{% endblock extra_head %}
 </head>
 <body class="bg-light">
-
-  <!-- Hlavička a navigace -->
+  <!-- Navigační bar -->
   <header>
-    <nav class="navbar navbar-expand-lg" style="background-color: #b5121b;">
+    <nav class="navbar navbar-expand-lg" style="background-color: #b5121b; height: 50px;">
       <div class="container-fluid">
-        <!-- Logo a název klubu -->
-        <a class="navbar-brand d-flex align-items-center text-white" href="{% url 'home' %}">
-          <img
-            src="{% static 'core/img/logo.png' %}"
-            alt="Logo TCR"
-            width="40"
-            height="40"
-            class="d-inline-block me-2"
-          >
-          <span class="fw-bold">TCR Tennis Club</span>
-        </a>
-
-        <!-- Tlačítko pro mobilní verzi -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          style="border-color: #fff;"
-        >
+        <a class="navbar-brand text-white" href="{% url 'home' %}">TCR Tennis Club</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+                aria-expanded="false" aria-label="Toggle navigation" style="border-color: #ffffff;">
           <span class="navbar-toggler-icon" style="filter: invert(100%);"></span>
-        </button>
+          
 
-        <!-- Odkazy v navigaci -->
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Domů</a>
+              <a class="nav-link text-white" href="{% url 'home' %}">Domů</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Členové</a>
+              <a class="nav-link text-white" href="{% url 'about' %}">O klubu</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Události</a>
+              <a class="nav-link text-white" href="{% url 'registration' %}">Registrace</a>
             </li>
-            <!-- Další odkazy, např. turnaje, rezervace atd. -->
           </ul>
         </div>
       </div>
     </nav>
   </header>
 
-  <!-- Hlavní obsah stránky -->
-  <main class="container my-4">
-    {% block content %}
-    <!-- Zde se bude vkládat obsah z ostatních šablon -->
-    {% endblock content %}
-  </main>
+  <!-- Hlavní obsah s levým sloupcem -->
+  <div class="container-fluid">
+    <div class="d-flex">
+      <!-- Levý sloupec se statickým obsahem -->
+      <div class="sidebar">
+        <img src="{% static 'images/logo.png' %}" alt="Logo TCR">
+      </div>
+
+      <!-- Hlavní obsah -->
+      <div class="main-content flex-grow-1">
+        {% block content %}
+        <!-- Zde se vkládá obsah z ostatních šablon -->
+        {% endblock content %}
+      </div>
+    </div>
+  </div>
 
   <!-- Patička -->
   <footer class="py-4" style="background-color: #b5121b;">
@@ -82,10 +68,7 @@
   </footer>
 
   <!-- Bootstrap JS (CDN) -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-  ></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   {% block extra_script %}{% endblock extra_script %}
 </body>
 </html>

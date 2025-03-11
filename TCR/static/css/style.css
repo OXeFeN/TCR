@@ -1,0 +1,48 @@
+.navbar-logo {
+    max-height: 75px; /* Nastav maximální výšku, aby navigační bar zůstal kompaktní */
+    width: auto;
+  }
+
+  .big-logo {
+    position: absolute;
+    top: 100px;   /* Upravit dle potřeby, aby logo bylo viditelné a nepřekrývalo navbar */
+    left: 10px;
+    width: 200px;
+    height: 200px;
+  }
+
+  /* Levý sloupec */
+.sidebar {
+    width: 200px;
+    /* Volitelně přidej padding nebo barvu pozadí */
+    padding: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  /* Logo uvnitř levého sloupce */
+  .sidebar img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* zajistí zachování poměru stran, případně uprav dle potřeby */
+  }
+  
+  /* Můžeš přidat další úpravy pro hlavní obsah, pokud potřebuješ */
+  .main-content {
+    padding: 10px;
+  }
+
+  .navbar-text-offset {
+    margin-left: 10px;
+  }
+
+  .form-group label {
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
