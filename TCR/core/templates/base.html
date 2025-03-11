@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>TCR - {% block title %}{% endblock title %}</title>
+
+  <!-- Bootstrap CSS (CDN) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  >
+
+  <!-- Vlastní CSS soubor (pokud chceš) -->
+  <!-- <link rel="stylesheet" href="{% static 'core/css/style.css' %}"> -->
+
+  {% block extra_head %}{% endblock extra_head %}
+</head>
+<body class="bg-light">
+
+  <!-- Hlavička a navigace -->
+  <header>
+    <nav class="navbar navbar-expand-lg" style="background-color: #b5121b;">
+      <div class="container-fluid">
+        <!-- Logo a název klubu -->
+        <a class="navbar-brand d-flex align-items-center text-white" href="{% url 'home' %}">
+          <img
+            src="{% static 'core/img/logo.png' %}"
+            alt="Logo TCR"
+            width="40"
+            height="40"
+            class="d-inline-block me-2"
+          >
+          <span class="fw-bold">TCR Tennis Club</span>
+        </a>
+
+        <!-- Tlačítko pro mobilní verzi -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          style="border-color: #fff;"
+        >
+          <span class="navbar-toggler-icon" style="filter: invert(100%);"></span>
+        </button>
+
+        <!-- Odkazy v navigaci -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Domů</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Členové</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Události</a>
+            </li>
+            <!-- Další odkazy, např. turnaje, rezervace atd. -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hlavní obsah stránky -->
+  <main class="container my-4">
+    {% block content %}
+    <!-- Zde se bude vkládat obsah z ostatních šablon -->
+    {% endblock content %}
+  </main>
+
+  <!-- Patička -->
+  <footer class="py-4" style="background-color: #b5121b;">
+    <div class="container text-center text-white">
+      <p class="mb-0">&copy; 2025 TCR Tennis Club</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (CDN) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  {% block extra_script %}{% endblock extra_script %}
+</body>
+</html>
