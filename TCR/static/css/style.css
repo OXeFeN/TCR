@@ -46,3 +46,12 @@
     width: 100%;
     margin-bottom: 15px;
 }
+.btn-custom {
+  background-color: #b5121b;
+  border-color: red;
+  transition: transform 0.3s ease;
+}
+.btn-custom:hover {
+  transform: scale(4);
+  background-color: red;
+}

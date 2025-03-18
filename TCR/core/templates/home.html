@@ -6,5 +6,11 @@
   <div class="container">
     <h1 class="my-4">Vítejte v TCR Tennis Club</h1>
     <p>Sem vlož uvítací text, novinky, důležité odkazy apod.</p>
+
+    {% for article in articles %}
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content|truncatewords:30 }}</p>
+    <p><small>Publikováno: {{ article.published_date }}</small></p>
+    {% endfor %}
   </div>
 {% endblock content %}
