@@ -77,6 +77,7 @@ WSGI_APPLICATION = 'TCR.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 DATABASES = {
@@ -128,3 +129,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# URL, kam se přesměruje uživatel, pokud se pokusí navštívit chráněnou stránku a není přihlášen.
+LOGIN_URL = '/accounts/login/'
+
+# URL, kam se přesměruje uživatel po úspěšném přihlášení.
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+# URL, kam se přesměruje uživatel po odhlášení.
+LOGOUT_REDIRECT_URL = '/logged_out/'

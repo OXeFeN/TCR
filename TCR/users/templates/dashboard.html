@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h2>Vítejte, {{ user_full_name }}!</h2>
+      <p>Jste přihlášeni jako {{ user.email }}.</p>
+      <hr>
+      <p>Zde najdete přehled vašich aktivit.</p>
+      <!-- Další obsah, widgety, odkazy apod. -->
+      <a href="{% url 'logout' %}" class="btn btn-secondary mt-3">Odhlásit se</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

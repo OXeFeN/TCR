@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
-    path('', include('users.urls')),
+    path('', include('users.urls')), # nebo jiný prefix dle potřeby
+    path('accounts/', include('django.contrib.auth.urls')),  # Toto zahrne login, logout, password reset, atd.
 ]
