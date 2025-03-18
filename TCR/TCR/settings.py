@@ -59,7 +59,7 @@ ROOT_URLCONF = 'TCR.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,4 +137,4 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 # URL, kam se přesměruje uživatel po odhlášení.
-LOGOUT_REDIRECT_URL = '/logged_out/'
+LOGOUT_REDIRECT_URL =  '/accounts/login/'

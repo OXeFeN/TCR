@@ -4,45 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>TCR - {% block title %}{% endblock title %}</title>
-
   <!-- Bootstrap CSS (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
   <!-- Vlastní CSS soubor -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
   {% block extra_head %}{% endblock extra_head %}
 </head>
 <body class="bg-light">
-  <!-- Navigační bar -->
-  <header>
-    <nav class="navbar navbar-expand-lg" style="background-color: #b5121b; height: 50px;">
-      <div class="container-fluid">
-        <a class="navbar-brand text-white" href="{% url 'home' %}">TCR Tennis Club</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-                aria-expanded="false" aria-label="Toggle navigation" style="border-color: #ffffff;">
-          <span class="navbar-toggler-icon" style="filter: invert(100%);"></span>
-          
-
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'home' %}">Domů</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'about' %}">O klubu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'registration' %}">Registrace</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-
+  <!-- Vložení headeru -->
+  {% include "header.html" %}
+  
   <!-- Hlavní obsah s levým sloupcem -->
   <div class="container-fluid">
     <div class="d-flex">
@@ -54,18 +25,14 @@
       <!-- Hlavní obsah -->
       <div class="main-content flex-grow-1">
         {% block content %}
-        <!-- Zde se vkládá obsah z ostatních šablon -->
+        <!-- Obsah vložený z podřízených šablon -->
         {% endblock content %}
       </div>
     </div>
   </div>
 
-  <!-- Patička -->
-  <footer class="py-4" style="background-color: #b5121b;">
-    <div class="container text-center text-white">
-      <p class="mb-0">&copy; 2025 TCR Tennis Club</p>
-    </div>
-  </footer>
+  <!-- Vložení footeru -->
+  {% include "footer.html" %}
 
   <!-- Bootstrap JS (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

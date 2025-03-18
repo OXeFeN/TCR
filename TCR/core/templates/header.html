@@ -1,0 +1,41 @@
+{% load static %}
+
+<header>
+  <nav class="navbar navbar-expand-lg" style="background-color: #b5121b; height: 50px;">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="{% url 'home' %}">TCR Tennis Club</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+              aria-expanded="false" aria-label="Toggle navigation" style="border-color: #ffffff;">
+        <span class="navbar-toggler-icon" style="filter: invert(100%);"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'home' %}">Domů</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'about' %}">O klubu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'registration' %}">Registrace</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'profile' %}">
+                {{ user.get_full_name|default:user.username }}
+                {% if user.profile.image %}
+                  <img src="{{ user.profile.image.url }}" alt="Profil" style="height:30px; width:30px; border-radius:50%; margin-left:5px;">
+                {% endif %}
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'login' %}">Login</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

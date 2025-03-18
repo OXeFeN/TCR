@@ -31,3 +31,7 @@ def dashboard(request):
         # přidejte další data dle potřeby
     }
     return render(request, 'dashboard.html', context)
+
+@login_required
+def profile_view(request):
+    return render(request, 'profile.html')

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Můj profil{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Můj profil</h1>
+  <div class="row">
+    <div class="col-md-4 text-center">
+      {% if user.profile.image %}
+        <img src="{{ user.profile.image.url }}" alt="Profilová fotka" class="img-thumbnail" style="max-width:150px;">
+      {% else %}
+        <img src="{% static 'images/default_profile.png' %}" alt="Profilová fotka" class="img-thumbnail" style="max-width:150px;">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th scope="row">Uživatelské jméno</th>
+            <td>{{ user.username }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Celé jméno</th>
+            <td>{{ user.get_full_name|default:user.username }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Email</th>
+            <td>{{ user.email }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Datum registrace</th>
+            <td>{{ user.date_joined|date:"d.m.Y" }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Poslední přihlášení</th>
+            <td>{{ user.last_login|date:"d.m.Y H:i" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
