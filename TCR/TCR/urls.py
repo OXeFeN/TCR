@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('', include('users.urls')), # nebo jiný prefix dle potřeby
     path('accounts/', include('django.contrib.auth.urls')),  # Toto zahrne login, logout, password reset, atd.
-    path('accounts/logout/', LogoutView.as_view(template_name='users/logged_out.html'), name='logout'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('accounts/logoutt/', TemplateView.as_view(template_name='users/logged_out.html'), name='late_logout'),
     
 ]

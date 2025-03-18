@@ -137,4 +137,4 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 # URL, kam se přesměruje uživatel po odhlášení.
-LOGOUT_REDIRECT_URL =  '/accounts/login/'
+LOGOUT_REDIRECT_URL =  'late_logout'

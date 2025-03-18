@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Seznam článků</h1>
+  {% if articles %}
+    <ul>
+      {% for article in articles %}
+        <li>
+          <h2>{{ article.title }}</h2>
+          <p>{{ article.content|truncatewords:30 }}</p>
+          <p><small>Publikováno: {{ article.published_date|date:"d.m.Y H:i" }}</small></p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Zatím nebyly vytvořeny žádné články.</p>
+  {% endif %}
+{% endblock content %}
