@@ -7,7 +7,7 @@ def article_list(request):
     articles = Article.objects.order_by('-published_date')
     return render(request, 'articles/article_list.html', {'articles': articles})
 
-@permission_required('articles.can_publish_article')  # nahraďte app_name názvem vaší aplikace
+@permission_required('articles.can_publish_article', raise_exception=True)  # nahraďte app_name názvem vaší aplikace
 def article_create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)

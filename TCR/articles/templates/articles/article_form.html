@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h1>Napište nový článek</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group custom-field">
+      <label for="title">Název:</label>
+      <input type="text" id="title" name="title" maxlength="255" required>
+    </div>
+
+    <div class="form-group custom-field">
+      <label for="slug">Slug (URL adresa):</label>
+      <input type="text" id="slug" name="slug" maxlength="255">
+    </div>
+
+    <div class="form-group custom-field">
+      <label for="meta_description">Meta popis:</label>
+      <textarea id="meta_description" name="meta_description" rows="3" maxlength="300" placeholder="Krátký popis pro SEO"></textarea>
+    </div>
+
+    <div class="form-group custom-field">
+      <label for="perex">Perex (stručný úvod):</label>
+      <textarea id="perex" name="perex" rows="4" maxlength="500" required></textarea>
+    </div>
+
+    <div class="form-group custom-field">
+      <label for="body">Tělo článku:</label>
+      <textarea id="body" name="body" rows="15" maxlength="4000" required></textarea>
+    </div>
+
+    <div class="form-group custom-field">
+      <label for="tags">Tagy (oddělené čárkou):</label>
+      <input type="text" id="tags" name="tags" placeholder="např. Django, Python, Web">
+    </div>
+
+    <div class="form-group custom-field">
+      <label for="category">Kategorie:</label>
+      <select id="category" name="category" required>
+        <option value="">-- Vyberte kategorii --</option>
+        <option value="novinky">Novinky</option>
+        <option value="tutorialy">Tutorialy</option>
+        <option value="názory">Názory</option>
+        <!-- případně další kategorie -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="button" onclick="previewArticle()">Náhled článku</button>
+      <button type="submit" class="btn-custom">Uložit článek</button>
+    </div>
+  </form>
+</div>
+
+  <script>
+    function previewArticle() {
+      // Jednoduchá funkce pro náhled článku v novém okně
+      const title = document.getElementById('title').value;
+      const perex = document.getElementById('perex').value;
+      const body = document.getElementById('body').value;
+      const previewWindow = window.open('', 'Preview', 'width=600,height=600');
+      previewWindow.document.write('<html><head><title>Náhled článku</title></head><body>');
+      previewWindow.document.write('<h1>' + title + '</h1>');
+      previewWindow.document.write('<h3>Perex:</h3><p>' + perex + '</p>');
+      previewWindow.document.write('<h3>Tělo článku:</h3><p>' + body + '</p>');
+      previewWindow.document.write('</body></html>');
+    }
+  </script>
+{% endblock content %}

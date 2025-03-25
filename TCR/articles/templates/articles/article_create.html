@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container mt-4">
   <h1>Nový článek</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Uložit článek</button>
   </form>
+</div>  
 {% endblock content %}

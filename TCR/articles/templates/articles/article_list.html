@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container mt-4">
   <h1>Seznam článků</h1>
   {% if articles %}
     <ul>
@@ -15,4 +16,5 @@
   {% else %}
     <p>Zatím nebyly vytvořeny žádné články.</p>
   {% endif %}
+</div>
 {% endblock content %}

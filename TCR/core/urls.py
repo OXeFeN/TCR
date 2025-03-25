@@ -10,6 +10,5 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('register/', register, name='register'),
     path('users/', include('users.urls')),  # Nebo dle potřeby s prefixem, např. 'users/'
-    #path('accounts/logout/', LogoutView.as_view(template_name='users/logged_out.html'), name='logout'),
-    #path('accounts/', include('django.contrib.auth.urls')),
+    path('articles/', include('articles.urls')),
 ]

@@ -49,9 +49,36 @@
 .btn-custom {
   background-color: #b5121b;
   border-color: red;
+  color:white;
   transition: transform 0.3s ease;
 }
 .btn-custom:hover {
-  transform: scale(4);
+  transform: scale(1.2);
   background-color: red;
+}
+.form-group {
+  margin-bottom: 1em;
+}
+.custom-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3em;
+}
+.custom-field input,
+.custom-field textarea,
+.custom-field select {
+  width: 100%;
+  padding: 0.5em;
+  box-sizing: border-box;
+}
+.btn-custom {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-size: 1em;
+}
+.btn-custom:hover {
+  background-color: #0056b3;
 }
