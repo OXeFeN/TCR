@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="calendar-container">
+    <h1>Rezervační kalendář</h1>
+    <div id="calendar">
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>Pondělí</th>
+                    <th>Úterý</th>
+                    <th>Středa</th>
+                    <th>Čtvrtek</th>
+                    <th>Pátek</th>
+                    <th>Sobota</th>
+                    <th>Neděle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for week in calendar_weeks %}
+                <tr>
+                    {% for day in week %}
+                    <td class="calendar-day {% if day.is_current_month %}current-month{% else %}other-month{% endif %}">
+                        <div class="day-number">{{ day.day }}</div>
+                        <div class="reservations">
+                            {% for reservation in day.reservations %}
+                            <div class="reservation">
+                                {{ reservation.start_hour }}:00 - {{ reservation.end_hour }}:00
+                            </div>
+                            {% empty %}
+                            <div class="no-reservations">Volno</div>
+                            {% endfor %}
+                        </div>
+                        <button class="reserve-btn" data-date="{{ day.date }}">Rezervovat</button>
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/calendar.js' %}"></script>
+{% endblock extra_js %}

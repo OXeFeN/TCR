@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Správa rezervací (Admin)</h1>
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Uživatel</th>
+            <th>Datum</th>
+            <th>Čas</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.user.username }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.start_hour }}:00 - {{ reservation.end_hour }}:00</td>
+            <td>
+                <form action="{% url 'delete_reservation' reservation.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Smazat</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Žádné rezervace nenalezeny.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
