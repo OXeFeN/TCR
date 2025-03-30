@@ -16,11 +16,11 @@ class Reservation(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                check=models.Q(start_hour__gte=0) & models.Q(start_hour__lte=23),
+                check=models.Q(start_hour__gte=6) & models.Q(start_hour__lte=21),
                 name='valid_start_hour'
             ),
             models.CheckConstraint(
-                check=models.Q(end_hour__gte=1) & models.Q(end_hour__lte=24),
+                check=models.Q(end_hour__gte=7) & models.Q(end_hour__lte=22),
                 name='valid_end_hour'
             ),
             models.CheckConstraint(

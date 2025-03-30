@@ -71,14 +71,163 @@
   padding: 0.5em;
   box-sizing: border-box;
 }
-.btn-custom {
+/* Kontejner kalendáře */
+.calendar-container {
+  margin: 20px auto;
+  max-width: 900px;       /* Šířka kalendáře */
+  padding: 10px;
+}
+
+/* Tabulka a její základní nastavení */
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Umožní rovnoměrné rozložení sloupců */
+}
+
+/* Hlavička tabulky (dny v týdnu) */
+.calendar-table thead th {
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 10px 0;
+  border: 1px solid #a43131;
+  font-weight: bold;
+}
+
+/* Tělo tabulky – buňky */
+.calendar-table tbody td {
+  border: 1px solid #ddd;
+  vertical-align: top;
+  height: 120px;       /* Výška „dlaždice“ pro den */
+  position: relative;  /* Umožní absolutní pozicování day-number */
+  padding: 5px;
+}
+
+/* Odlišení dnů aktuálního měsíce vs. „přetékajících“ dnů */
+.current-month {
+  background-color: #fff;
+}
+.other-month {
+  background-color: #f9f9f9;
+  color: #aaa; /* ztlumená barva textu */
+}
+
+/* Číslo dne */
+.day-number {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Rezervace uvnitř dne */
+.reservations {
+  margin-top: 2px; /* odsazení, aby nepřekrývalo číslo dne */
+  font-size: 0.9em;
+}
+.reservation {
+  background-color: #cce5ff;
+  border: 1px solid #b8daff;
+  margin: 3px 0;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+.no-reservations {
+  color: #6c757d;
+  font-size: 0.85em;
+}
+
+/* Tlačítko pro rezervaci */
+.reserve-btn {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 4px 8px;
+  font-size: 0.85em;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
   background-color: #007bff;
   color: #fff;
-  border: none;
-  padding: 0.5em 1em;
-  cursor: pointer;
-  font-size: 1em;
 }
-.btn-custom:hover {
+.reserve-btn:hover {
   background-color: #0056b3;
+}
+/* Grid pro kalendář – 7 sloupců */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background-color: #ccc;
+  padding: 5px;
+}
+
+/* Hlavička kalendáře (dny v týdnu) */
+.calendar-header {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #ccc;
+}
+
+/* Styl pro jednotlivé dny */
+.calendar-day {
+  background-color: #fff;
+  padding: 5px;
+  min-height: 120px;
+  border: 1px solid #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.calendar-day:hover {
+  background-color: #e0e0e0;
+}
+.day-number {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+/* Styl pro modální okno */
+.modal {
+  display: none; /* Skryto, dokud není aktivní */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Obsah modálu */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+  border-radius: 5px;
+}
+
+/* Tlačítko pro zavření modálu */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-content .close:hover {
+  color: #000;
 }

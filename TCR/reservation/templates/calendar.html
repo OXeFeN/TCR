@@ -1,52 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
-{% endblock extra_css %}
-
 {% block content %}
 <div class="calendar-container">
-    <h1>Rezervační kalendář</h1>
-    <div id="calendar">
-        <table class="calendar-table">
-            <thead>
-                <tr>
-                    <th>Pondělí</th>
-                    <th>Úterý</th>
-                    <th>Středa</th>
-                    <th>Čtvrtek</th>
-                    <th>Pátek</th>
-                    <th>Sobota</th>
-                    <th>Neděle</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for week in calendar_weeks %}
-                <tr>
-                    {% for day in week %}
-                    <td class="calendar-day {% if day.is_current_month %}current-month{% else %}other-month{% endif %}">
-                        <div class="day-number">{{ day.day }}</div>
-                        <div class="reservations">
-                            {% for reservation in day.reservations %}
-                            <div class="reservation">
-                                {{ reservation.start_hour }}:00 - {{ reservation.end_hour }}:00
-                            </div>
-                            {% empty %}
-                            <div class="no-reservations">Volno</div>
-                            {% endfor %}
-                        </div>
-                        <button class="reserve-btn" data-date="{{ day.date }}">Rezervovat</button>
-                    </td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <h1>Rezervační kalendář</h1>
+  <div id="calendar" class="calendar-grid">
+    <!-- Hlavička s názvy dnů -->
+    <div class="calendar-header">Pondělí</div>
+    <div class="calendar-header">Úterý</div>
+    <div class="calendar-header">Středa</div>
+    <div class="calendar-header">Čtvrtek</div>
+    <div class="calendar-header">Pátek</div>
+    <div class="calendar-header">Sobota</div>
+    <div class="calendar-header">Neděle</div>
+
+    {% for week in calendar_weeks %}
+      {% for day in week %}
+        <div class="calendar-day 
+          {% if day.status == 'closed' %}
+            status-closed
+          {% elif day.reservations|length == 0 %}
+            status-free
+          {% elif day.reservations|length < max_reservations %}
+            status-reserved
+          {% else %}
+            status-full
+          {% endif %}"
+          data-date="{{ day.date }}">
+          <div class="day-number">{{ day.day }}</div>
+          {% if day.reservations|length > 0 %}
+            <div class="reservation-info">
+              {{ day.reservations|length }} rezervací
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
 </div>
 {% endblock content %}
 
-{% block extra_js %}
+{% block extra_script %}
 <script src="{% static 'js/calendar.js' %}"></script>
-{% endblock extra_js %}
+{% endblock extra_script %}
