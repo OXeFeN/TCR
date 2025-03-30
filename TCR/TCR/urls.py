@@ -26,5 +26,5 @@ urlpatterns = [
     path('', include('core.urls')),    
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
     path('accounts/logoutt/', TemplateView.as_view(template_name='users/logged_out.html'), name='late_logout'),
-    path('reservations/', include('reservation.urls')),   
+    path('reservation/', include('reservation.urls')),   
 ]

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<h1>Kalendář pro rok {{ year }}</h1>
+<div class="year-calendar">
+  {% for month in months %}
+    <div class="month-block">
+      <h2>{{ month.month_name }} {{ year }}</h2>
+      <table class="table table-bordered calendar-table">
+        <thead>
+          <tr>
+            <th>Pon</th>
+            <th>Úte</th>
+            <th>Stř</th>
+            <th>Čtv</th>
+            <th>Pát</th>
+            <th>Sob</th>
+            <th>Ned</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for week in month.weeks %}
+            <tr>
+              {% for day in week %}
+                <td class="day-cell {% if not day.is_current_month %}not-current-month{% endif %}" data-date="{{ day.date }}">
+                  {{ day.day }}
+                  {% if day.reservations.count > 0 %}
+                    <div class="reservation-indicator">
+                      Rezervace: {{ day.reservations.count }}
+                    </div>
+                  {% endif %}
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/calendar_year.js' %}"></script>
+{% endblock extra_js %}
