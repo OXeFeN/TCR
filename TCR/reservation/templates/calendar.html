@@ -15,31 +15,39 @@
     <div class="calendar-header">Neděle</div>
 
     {% for week in calendar_weeks %}
-      {% for day in week %}
-        <div class="calendar-day 
-          {% if day.status == 'closed' %}
-            status-closed
-          {% elif day.reservations|length == 0 %}
+    {% for day in week %}
+      <div class="calendar-day 
+        {% if day.is_past %}
+          disabled
+        {% else %}
+          {% if day.reservations|length == 0 %}
             status-free
           {% elif day.reservations|length < max_reservations %}
             status-reserved
           {% else %}
             status-full
-          {% endif %}"
-          data-date="{{ day.date }}">
-          <div class="day-number">{{ day.day }}</div>
-          {% if day.reservations|length > 0 %}
-            <div class="reservation-info">
-              {{ day.reservations|length }} rezervací
-            </div>
           {% endif %}
-        </div>
-      {% endfor %}
+        {% endif %}"
+        data-date="{{ day.date }}">
+        <div class="day-number">{{ day.day }}</div>
+        {% if day.reservations|length > 0 %}
+          <div class="reservation-info">
+            {{ day.reservations|length }} rezervací
+          </div>
+        {% endif %}
+      </div>
     {% endfor %}
+  {% endfor %}
   </div>
 </div>
 {% endblock content %}
 
 {% block extra_script %}
-<script src="{% static 'js/calendar.js' %}"></script>
+{% if user.is_authenticated %}
+  <script src="{% static 'js/calendar.js' %}"></script>
+{% else %}
+  <script>
+    console.log("Nepřihlášený uživatel – skript rezervací se nenačte.");
+  </script>
+{% endif %}
 {% endblock extra_script %}

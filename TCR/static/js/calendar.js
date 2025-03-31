@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("calendar.js loaded");
 
-  // Připojení listeneru ke všem dlaždicím dne
-  const dayTiles = document.querySelectorAll(".calendar-day");
+  // Připojení listeneru pouze ke dlaždicím, které nejsou disabled
+  const dayTiles = document.querySelectorAll(".calendar-day:not(.disabled)");
   dayTiles.forEach(function(tile) {
     tile.addEventListener("click", function() {
       const date = tile.getAttribute("data-date");
@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
 function openReservationModal(date) {
   let modal = document.getElementById("reservationModal");
   if (!modal) {
-    // Vytvoření modálního okna, pokud ještě neexistuje
     modal = document.createElement("div");
     modal.id = "reservationModal";
     modal.classList.add("modal");
@@ -24,10 +23,10 @@ function openReservationModal(date) {
         <span class="close">&times;</span>
         <h2>Rezervace pro ${date}</h2>
         <form id="reservationForm">
-          <label for="start_hour">Začátek (hodina):</label>
-          <input type="number" id="start_hour" name="start_hour" min="6" max="21" required>
-          <label for="end_hour">Konec (hodina):</label>
-          <input type="number" id="end_hour" name="end_hour" min="7" max="22" required>
+          <label for="time_interval">Vyberte časový interval:</label>
+          <select id="time_interval" name="time_interval">
+            <option value="">Načítání...</option>
+          </select>
           <input type="hidden" name="date" value="${date}">
           <button type="submit" class="btn btn-custom">Vytvořit rezervaci</button>
         </form>
@@ -35,7 +34,7 @@ function openReservationModal(date) {
     `;
     document.body.appendChild(modal);
 
-    // Zavření modálu po kliknutí na "X"
+    // Listener pro zavření modálu pomocí tlačítka "X"
     modal.querySelector(".close").addEventListener("click", function() {
       modal.style.display = "none";
     });
@@ -51,27 +50,73 @@ function openReservationModal(date) {
       submitReservationForm(modal);
     });
   } else {
-    // Aktualizujeme titulek a skryté pole pro datum, pokud modál již existuje
+    // Aktualizace titulku a skrytého pole pro datum, pokud modál již existuje
     modal.querySelector("h2").innerText = `Rezervace pro ${date}`;
     modal.querySelector("input[name='date']").value = date;
   }
   modal.style.display = "block";
+  
+  // Načtení dostupných časových intervalů pro zvolené datum
+  loadAvailableIntervals(date);
+}
+
+// Funkce pro načtení dostupných intervalů
+function loadAvailableIntervals(date) {
+  const select = document.getElementById("time_interval");
+  // Vyprázdnění selectu
+  select.innerHTML = "";
+  fetch("/reservation/available_intervals/?date=" + date)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Chyba při načítání dostupných termínů");
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.length === 0) {
+        let option = document.createElement("option");
+        option.value = "";
+        option.textContent = "Žádné dostupné termíny";
+        select.appendChild(option);
+      } else {
+        data.forEach(interval => {
+          let option = document.createElement("option");
+          option.value = interval.start + "-" + interval.end;
+          option.textContent = `${interval.start}:00 - ${interval.end}:00`;
+          select.appendChild(option);
+        });
+      }
+    })
+    .catch(error => {
+      console.error("Error loading intervals:", error);
+      let option = document.createElement("option");
+      option.value = "";
+      option.textContent = "Chyba při načítání termínů";
+      select.appendChild(option);
+    });
 }
 
 // Funkce, která odesílá data rezervace přes AJAX
 function submitReservationForm(modal) {
   const form = modal.querySelector("#reservationForm");
   const formData = new FormData(form);
-  const data = {
-    date: formData.get("date"),
-    start_hour: formData.get("start_hour"),
-    end_hour: formData.get("end_hour")
-  };
+  const date = formData.get("date");
+  const interval = formData.get("time_interval");
 
-  if (parseInt(data.end_hour) <= parseInt(data.start_hour)) {
-    alert("Koncová hodina musí být větší než začáteční.");
+  if (!interval) {
+    alert("Prosím vyberte časový interval.");
     return;
   }
+
+  const parts = interval.split("-");
+  const start_hour = parseInt(parts[0], 10);
+  const end_hour = parseInt(parts[1], 10);
+
+  const data = {
+    date: date,
+    start_hour: start_hour,
+    end_hour: end_hour
+  };
 
   fetch("/reservation/create/", {
     method: "POST",
@@ -90,7 +135,6 @@ function submitReservationForm(modal) {
   .then(result => {
     alert(result.message);
     modal.style.display = "none";
-    // Volitelně obnovit stránku, aby se aktualizoval kalendář
     location.reload();
   })
   .catch(error => {

@@ -3,8 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.calendar_view, name='calendar'),
-    path('year/<int:year>/', views.year_calendar_view, name='year_calendar'),
+    #path('year/<int:year>/', views.year_calendar_view, name='year_calendar'),
     path('create/', views.create_reservation, name='create_reservation'),
     path('admin/', views.admin_reservations_view, name='admin_reservations'),
     path('admin/delete/<int:reservation_id>/', views.delete_reservation, name='delete_reservation'),
+    path('available_intervals/', views.available_intervals, name='available_intervals'),
+    path('my_reservations/', views.my_reservations_view, name='my_reservations'),
 ]

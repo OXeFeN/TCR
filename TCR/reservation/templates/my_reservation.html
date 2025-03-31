@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  {% if not user.is_authenticated %}
+    <p class="text-center">Pro zobrazení rezervací se přihlašte.</p>
+  {% else %}
+    <div class="my-reservations container mt-4">
+      <h1 class="mb-4">Moje rezervace</h1>
+      
+      <h2>Budoucí rezervace</h2>
+      {% if future_reservations %}
+        <ul class="list-group mb-4">
+          {% for reservation in future_reservations %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ reservation.date }}</strong> 
+                ({{ reservation.start_hour }}:00 - {{ reservation.end_hour }}:00)
+                <br>
+                Vytvořeno: {{ reservation.created_at|date:"d.m.Y H:i" }}
+              </div>
+              <form action="{% url 'delete_reservation' reservation.id %}" method="post" class="m-0">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-custom">Smazat</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Žádné budoucí rezervace.</p>
+      {% endif %}
+      
+      <h2>Minulé rezervace</h2>
+      {% if past_reservations %}
+        <ul class="list-group">
+          {% for reservation in past_reservations %}
+            <li class="list-group-item">
+              <strong>{{ reservation.date }}</strong>
+              ({{ reservation.start_hour }}:00 - {{ reservation.end_hour }}:00)
+              <br>
+              Vytvořeno: {{ reservation.created_at|date:"d.m.Y H:i" }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Žádné minulé rezervace.</p>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock content %}

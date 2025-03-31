@@ -204,7 +204,6 @@
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
 /* Obsah modálu */
 .modal-content {
   background-color: #fff;
@@ -216,7 +215,6 @@
   position: relative;
   border-radius: 5px;
 }
-
 /* Tlačítko pro zavření modálu */
 .modal-content .close {
   position: absolute;
@@ -227,7 +225,23 @@
   font-weight: bold;
   cursor: pointer;
 }
-
 .modal-content .close:hover {
   color: #000;
+}
+/* Den bez rezervací – volno, bílé pozadí */
+.status-free {
+  background-color: #ffffff;
+}
+/* Den s rezervacemi, ale ještě není plně obsazen – žlutá */
+.status-reserved {
+  background-color: #eaff00; /* světle žlutá */
+}
+/* Den plně obsazený – červená */
+.status-full {
+  background-color: #b5121b; /* světle červená */
+}
+/* Dny v minulosti – šedá a deaktivované */
+.disabled {
+  background-color: #d1d1d1;
+  pointer-events: none;  /* zabrání interakci, včetně hover efektů */
 }

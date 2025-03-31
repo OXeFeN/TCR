@@ -19,6 +19,8 @@
           </li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'article_list' %}">Seznam článků</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'calendar' %}">Kalendář rezervací</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{% url 'my_reservations' %}">Moje rezervace</a></li>
+
           
           {% if user.is_authenticated %}
             <li class="nav-item">
