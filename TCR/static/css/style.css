@@ -196,7 +196,7 @@
 .modal {
   display: none; /* Skryto, dokud není aktivní */
   position: fixed;
-  z-index: 1000;
+  z-index: 1500;
   left: 0;
   top: 0;
   width: 100%;
@@ -244,4 +244,16 @@
 .disabled {
   background-color: #d1d1d1;
   pointer-events: none;  /* zabrání interakci, včetně hover efektů */
+}
+.reservation-info {
+  font-size: 0.85em;         /* Menší text */
+  font-weight: bold;         /* Tučný text */
+  color: #ffffff;            /* Barva textu */
+  background-color: #b5121b; /* Zelené pozadí (můžete změnit na libovolnou barvu) */
+  padding: 4px 8px;          /* Vnitřní odsazení */
+  border-radius: 4px;        /* Zaoblení rohů */
+  position: absolute;        /* Absolutní pozicování */
+  bottom: 10px;               /* Umístění odspodu */
+  left: 10px;                 /* Umístění zleva */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Jemný stín pro lepší kontrast */
 }
