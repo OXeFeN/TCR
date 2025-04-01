@@ -4,6 +4,12 @@
 {% block content %}
 <div class="calendar-container">
   <h1>Rezervační kalendář</h1>
+  
+  <!-- Blok s textovým polem -->
+  <div class="text-block">
+    <p>Pro výběr rezervace zvolte příslušný den z kalendáře. Ve výběrovém menu vyberte čas. Potřebujete-li delší rezervaci vyberte více po sobě jdoucích časů. Pokud nemůžete svůj čas najít pak jej již nekdo jiný rezervoval.</p>
+  </div>
+  
   <div id="calendar" class="calendar-grid">
     <!-- Hlavička s názvy dnů -->
     <div class="calendar-header">Pondělí</div>
@@ -15,29 +21,18 @@
     <div class="calendar-header">Neděle</div>
 
     {% for week in calendar_weeks %}
-    {% for day in week %}
-      <div class="calendar-day 
-        {% if day.is_past %}
-          disabled
-        {% else %}
-          {% if day.reservations|length == 0 %}
-            status-free
-          {% elif day.reservations|length < max_reservations %}
-            status-reserved
-          {% else %}
-            status-full
+      {% for day in week %}
+        <div class="calendar-day {% if day.is_past %}disabled{% else %}{% if day.reservations|length == 0 %}status-free{% elif day.reservations|length < max_reservations %}status-reserved{% else %}status-full{% endif %}{% endif %}"
+             data-date="{{ day.date }}">
+          <div class="day-number">{{ day.day }}</div>
+          {% if day.reservations|length > 0 %}
+            <div class="reservation-info">
+              {{ day.reservations|length }} rezervací
+            </div>
           {% endif %}
-        {% endif %}"
-        data-date="{{ day.date }}">
-        <div class="day-number">{{ day.day }}</div>
-        {% if day.reservations|length > 0 %}
-          <div class="reservation-info">
-            {{ day.reservations|length }} rezervací
-          </div>
-        {% endif %}
-      </div>
+        </div>
+      {% endfor %}
     {% endfor %}
-  {% endfor %}
   </div>
 </div>
 {% endblock content %}

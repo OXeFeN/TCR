@@ -20,15 +20,15 @@
 
           {% if user.is_authenticated and user.is_staff %}
             <!-- Obsah určený pouze pro adminy -->
-            <li class="nav-item"><a class="nav-link text-white" href="{% url 'admin_reservations' %}">Správa rezervací</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="{% url 'article_create' %}">Nový článek</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'admin_reservations' %}">Správa rezervací</a></li>
+            
           {% endif %}
 
           
           {% if user.is_authenticated %}
             
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'profile' %}">
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}">
                 {{ user.get_full_name|default:user.username }}
                 {% if user.profile.image %}
                   <img src="{{ user.profile.image.url }}" alt="Profil" style="height:30px; width:30px; border-radius:50%; margin-left:5px;">
