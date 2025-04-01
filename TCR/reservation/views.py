@@ -151,13 +151,26 @@ def admin_reservations_view(request):
     context = {"reservations": reservations}
     return render(request, "admin_reservations.html", context)
 
-@staff_member_required
+@login_required
 @require_POST
 def delete_reservation(request, reservation_id):
     """
-    Umožňuje adminovi smazat rezervaci.
+    Umožňuje smazat rezervaci.
+    - Admin (is_staff) může mazat jakoukoli rezervaci.
+    - Běžný uživatel může mazat pouze rezervace, které vytvořil.
     """
     reservation = get_object_or_404(Reservation, id=reservation_id)
+    
+    # Pokud není admin a rezervace nepatří přihlášenému uživateli, zamítneme akci.
+    if not request.user.is_staff and reservation.user != request.user:
+        messages.error(request, "Nemáte oprávnění smazat tuto rezervaci.")
+        return redirect("my_reservations")
+    
     reservation.delete()
     messages.success(request, "Rezervace byla úspěšně smazána.")
-    return redirect("admin_reservations")
+    
+    # Přesměrujeme podle role uživatele
+    if request.user.is_staff:
+        return redirect("admin_reservations")
+    else:
+        return redirect("my_reservations")

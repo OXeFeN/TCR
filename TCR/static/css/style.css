@@ -254,6 +254,6 @@
   border-radius: 4px;        /* Zaoblení rohů */
   position: absolute;        /* Absolutní pozicování */
   bottom: 10px;               /* Umístění odspodu */
-  left: 10px;                 /* Umístění zleva */
+  left: 19px;                 /* Umístění zleva */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Jemný stín pro lepší kontrast */
 }

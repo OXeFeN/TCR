@@ -11,18 +11,22 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          
+
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'home' %}">Domů</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'about' %}">O klubu</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'article_list' %}">Seznam článků</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'calendar' %}">Kalendář rezervací</a></li>
           <li class="nav-item"><a class="nav-link text-white" href="{% url 'my_reservations' %}">Moje rezervace</a></li>
 
+          {% if user.is_authenticated and user.is_staff %}
+            <!-- Obsah určený pouze pro adminy -->
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'admin_reservations' %}">Správa rezervací</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'article_create' %}">Nový článek</a></li>
+          {% endif %}
+
           
           {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'article_create' %}">Nový článek</a>
-            </li>
+            
             <li class="nav-item">
               <a class="nav-link text-white" href="{% url 'profile' %}">
                 {{ user.get_full_name|default:user.username }}
