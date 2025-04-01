@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, get_user_model
 
 def register(request):
     if request.method == 'POST':
@@ -35,3 +36,51 @@ def dashboard(request):
 @login_required
 def profile_view(request):
     return render(request, 'profile.html')
+
+User = get_user_model()
+
+@staff_member_required
+def user_management(request):
+    if request.method == 'POST':
+        for user_id in request.POST.getlist('user_ids'):
+            try:
+                user = User.objects.get(pk=user_id)
+                checkbox_name = f'paid_{user.id}'
+                user.membership_paid = checkbox_name in request.POST
+                user.save()
+            except User.DoesNotExist:
+                pass  # volitelně logovat
+
+        return redirect('user_management')
+
+    staff_users = User.objects.filter(is_staff=True)
+    regular_users = User.objects.filter(is_staff=False)
+
+    return render(request, 'users/user_management.html', {
+        'staff_users': staff_users,
+        'regular_users': regular_users,
+    })
+
+@staff_member_required
+def delete_user(request, user_id):
+    if request.method == 'POST':
+        user = get_object_or_404(User, pk=user_id)
+        # Zamezíme, aby uživatel mohl smazat sám sebe
+        if user != request.user and not user.is_superuser:
+            user.delete()
+    return redirect('user_management')
+
+
+@staff_member_required
+def delete_users_bulk(request):
+    if request.method == 'POST':
+        ids = request.POST.getlist('user_ids_to_delete')
+        for uid in ids:
+            try:
+                user = User.objects.get(pk=uid)
+                # Nesmíme smazat sami sebe nebo superuživatele
+                if user != request.user and not user.is_superuser:
+                    user.delete()
+            except User.DoesNotExist:
+                pass
+    return redirect('user_management')
