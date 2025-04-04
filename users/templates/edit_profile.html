@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Upravit profil{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Upravit profil</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-custom2">Uložit změny</button>
+    <a href="{% url 'profile' %}" class="btn btn-custom">Zrušit</a>
+  </form>
+  <a href="{% url 'change_password' %}" class="btn btn-custom">Chci změnit heslo</a>
+</div>
+{% endblock %}

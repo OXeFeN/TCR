@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %} 
 
 {% block content %}
 <div class="container mt-4">
@@ -6,7 +7,7 @@
 
   <form method="post" action="{% url 'delete_users_bulk' %}" id="bulk-delete-form">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger mb-4" onclick="return confirmBulkDelete();">
+    <button type="submit" class="btn btn btn-custom" onclick="return confirmBulkDelete();">
       Smazat vybrané
     </button>
 
@@ -23,14 +24,14 @@
                 <input type="checkbox" name="paid_{{ user.id }}" {% if user.membership_paid %}checked{% endif %}>
                 Zaplaceno
               </label>
-              <button type="submit" class="btn btn-sm btn-outline-primary">Uložit</button>
+              <button type="submit" class="btn btn-sm btn-custom2">Uložit</button>
             </form>
 
             {% if user != request.user %}
               <input type="checkbox" name="user_ids_to_delete" value="{{ user.id }}">
               <form method="post" action="{% url 'delete_user' user.id %}" onsubmit="return confirmSingleDelete();">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-danger">Smazat</button>
+                <button type="submit" class="btn btn-custom">Smazat</button>
               </form>
             {% endif %}
           </div>
@@ -53,14 +54,14 @@
                 <input type="checkbox" name="paid_{{ user.id }}" {% if user.membership_paid %}checked{% endif %}>
                 Zaplaceno
               </label>
-              <button type="submit" class="btn btn-sm btn-outline-primary">Uložit</button>
+              <button type="submit" class="btn btn-custom2">Uložit</button>
             </form>
 
             {% if user != request.user %}
               <input type="checkbox" name="user_ids_to_delete" value="{{ user.id }}">
               <form method="post" action="{% url 'delete_user' user.id %}" onsubmit="return confirmSingleDelete();">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-danger">Smazat</button>
+                <button type="submit" class="btn btn-custom">Smazat</button>
               </form>
             {% endif %}
           </div>
@@ -70,11 +71,12 @@
       {% endfor %}
     </ul>
 
-    <button type="submit" class="btn btn-danger mt-2" onclick="return confirmBulkDelete();">
+    <button type="submit" class="btn btn-custom" onclick="return confirmBulkDelete();">
       Smazat vybrané
     </button>
   </form>
 </div>
 {% endblock %}
-
-<script src="{% static 'users.js' %}"></script>
+{% block extra_script %}
+<script src="{% static 'js/users.js' %}"></script>
+{% endblock extra_script %}

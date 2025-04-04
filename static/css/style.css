@@ -5,7 +5,7 @@
 
   .big-logo {
     position: absolute;
-    top: 100px;   /* Upravit dle potřeby, aby logo bylo viditelné a nepřekrývalo navbar */
+    top: 110px;   /* Upravit dle potřeby, aby logo bylo viditelné a nepřekrývalo navbar */
     left: 10px;
     width: 200px;
     height: 200px;
@@ -55,6 +55,17 @@
 .btn-custom:hover {
   transform: scale(1.2);
   background-color: red;
+}
+.btn-custom2 {
+  background-color: #ffffff;
+  border: 1px solid #0d6efd;
+  color: #0d6efd;
+  transition: all 0.3s ease;
+}
+.btn-custom2:hover {
+  background-color: #0d6efd;
+  color: #ffffff;
+  transform: scale(1.2);
 }
 .form-group {
   margin-bottom: 1em;

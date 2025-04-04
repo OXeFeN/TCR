@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 
 class Role(models.Model):
     role_name = models.CharField(max_length=50, unique=True, verbose_name="Název role")
@@ -13,9 +14,21 @@ class CustomUser(AbstractUser):
     membership_paid = models.BooleanField(default=False, verbose_name="Zaplacený členský příspěvek")
     # Vztah many-to-many k modelu Role, přes propojující tabulku UserRole
     roles = models.ManyToManyField(Role, through='UserRole', related_name="users", blank=True)
+    membership_paid = models.BooleanField(default=False, verbose_name="Zaplacený členský příspěvek")
+    roles = models.ManyToManyField(Role, through='UserRole', related_name="users", blank=True)
+    phone_number = models.CharField(
+        max_length=20,
+        verbose_name="Telefonní číslo",
+        validators=[
+            RegexValidator(r'^\+?[\d\s]+$', 'Zadejte platné telefonní číslo.')
+            ],
+        blank=False,
+        null=False
+    )
 
     def __str__(self):
         return self.username
+        
 
 class UserRole(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Uživatel")

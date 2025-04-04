@@ -3,27 +3,34 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import login, get_user_model
+from .forms import CustomUserForm
+
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Uloží nového uživatele
-            # Získání údajů pro autentizaci
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            # Autentizace uživatele
-            user = authenticate(username=username, password=raw_password)
-            if user is not None:
-                login(request, user)  # Přihlášení uživatele
-                messages.success(request, 'Registrace proběhla úspěšně a jste nyní přihlášeni.')
-                return redirect('dashboard')  # Přesměrování na stránku po přihlášení (např. dashboard)
-            else:
-                messages.error(request, 'Došlo k chybě při autentizaci.')
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registrace proběhla úspěšně a jste nyní přihlášeni.')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Zkontrolujte formulář – některá pole nejsou správně vyplněna.')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration.html', {'form': form})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = CustomUserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # pojmenuj si podle své URL
+    else:
+        form = CustomUserForm(instance=request.user)
+    return render(request, 'edit_profile.html', {'form': form})
 
 @login_required
 def dashboard(request):

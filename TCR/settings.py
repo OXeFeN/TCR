@@ -140,3 +140,6 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 
 # URL, kam se přesměruje uživatel po odhlášení.
 LOGOUT_REDIRECT_URL =  'late_logout'
+
+#Time out pro platnost odkazu na reset hesla.
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 3  # 3 dny v sekundách
