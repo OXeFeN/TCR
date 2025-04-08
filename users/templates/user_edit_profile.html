@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Úprava uživatele: {{ target_user.username }}</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    {% for field in form %}
+      <div class="form-group mb-3">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+          <div class="text-danger small">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-custom">Uložit změny</button>
+    <a href="{% url 'user_management' %}" class="btn btn-secondary">Zpět</a>
+  </form>
+</div>
+{% endblock %}

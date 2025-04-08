@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register, dashboard, profile_view, user_management, delete_user, delete_users_bulk, edit_profile
+from .views import register, dashboard, profile_view, user_management, delete_user, delete_users_bulk, edit_profile, admin_edit_user
 from django.contrib.auth.views import LogoutView, LoginView, PasswordChangeView, PasswordChangeDoneView
 
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
     path('profil/edit/', edit_profile, name='edit_profile'),
     path('profil/heslo/', PasswordChangeView.as_view(template_name='change_password.html'), name='change_password'),
     path('profil/heslo-hotovo/', PasswordChangeDoneView.as_view(template_name='password_change_done.html'), name='password_change_done'),
+    path('admin/users/edit/<int:user_id>/', admin_edit_user, name='admin_edit_user'),
 ]

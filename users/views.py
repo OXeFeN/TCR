@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import CustomUserCreationForm
-from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm, CustomUserForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserForm
+from .models import CustomUser
+
 
 
 def register(request):
@@ -91,3 +92,24 @@ def delete_users_bulk(request):
             except User.DoesNotExist:
                 pass
     return redirect('user_management')
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def admin_edit_user(request, user_id):
+    target_user = get_object_or_404(CustomUser, pk=user_id)
+
+    if request.method == 'POST':
+        form = CustomUserForm(request.POST, instance=target_user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Uživatel {target_user.username} byl úspěšně upraven.")
+            return redirect('user_management')
+        else:
+            messages.error(request, "Formulář obsahuje chyby. Zkontrolujte prosím všechna pole.")
+    else:
+        form = CustomUserForm(instance=target_user)
+
+    return render(request, 'user_edit_profile.html', {
+        'form': form,
+        'target_user': target_user
+    })

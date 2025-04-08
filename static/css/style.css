@@ -1,3 +1,27 @@
+@media (max-width: 768px) {
+  .hlavni-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 70%; /* nebo 100% – podle potřeby */
+    height: 100vh;
+    background-color: white;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hlavni-menu.open {
+    transform: translateX(0);
+  }
+  .highlighted {
+    border-left: none;
+    border-top: 4px solid #dc3545;
+    background-color: #fff6f6;
+    transform: none;
+  }
+}
+
 .navbar-logo {
     max-height: 75px; /* Nastav maximální výšku, aby navigační bar zůstal kompaktní */
     width: auto;
@@ -12,7 +36,7 @@
   }
 
   /* Levý sloupec */
-.sidebar {
+  .sidebar {
     width: 200px;
     /* Volitelně přidej padding nebo barvu pozadí */
     padding: 10px;
@@ -20,7 +44,7 @@
   }
   
   /* Logo uvnitř levého sloupce */
-  .sidebar img {
+.sidebar img {
     width: 200px;
     height: 200px;
     object-fit: cover; /* zajistí zachování poměru stran, případně uprav dle potřeby */
@@ -66,6 +90,24 @@
   background-color: #0d6efd;
   color: #ffffff;
   transform: scale(1.2);
+}
+/* Ikona před textem */
+.btn i {
+  margin-right: 6px;
+  font-style: normal; /* pokud používáš font-icon, můžeš přepsat */
+}
+
+/* Volitelně: vlastní ikonka přes content (CSS emoji nebo znak) */
+.icon-edit::before {
+  content: "✏️";
+}
+
+.icon-delete::before {
+  content: "🗑️";
+}
+
+.icon-save::before {
+  content: "💾";
 }
 .form-group {
   margin-bottom: 1em;
@@ -276,4 +318,13 @@
 }
 .text-block h2 {
   margin-top: 0;
+}
+
+/* Zvýraznění vybraného uživatele při zaškrtnutí checkboxu */
+.highlighted {
+  background-color: #fff3f3;
+  border-left: 4px solid #dc3545;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  transform: scale(1.01);
+  border-radius: 6px;
 }

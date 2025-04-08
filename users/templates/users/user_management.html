@@ -7,8 +7,8 @@
 
   <form method="post" action="{% url 'delete_users_bulk' %}" id="bulk-delete-form">
     {% csrf_token %}
-    <button type="submit" class="btn btn btn-custom" onclick="return confirmBulkDelete();">
-      Smazat vybrané
+    <button type="submit" class="btn btn-custom mb-3" onclick="return confirmBulkDelete();">
+      <i class="icon-delete"></i> Smazat vybrané
     </button>
 
     <h4>Personál</h4>
@@ -17,6 +17,7 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
           {{ user.username }} ({{ user.email }})
           <div class="d-flex align-items-center gap-3">
+            <!-- Formulář zaplaceno -->
             <form method="post" action="{% url 'user_management' %}">
               {% csrf_token %}
               <input type="hidden" name="user_ids" value="{{ user.id }}">
@@ -24,14 +25,24 @@
                 <input type="checkbox" name="paid_{{ user.id }}" {% if user.membership_paid %}checked{% endif %}>
                 Zaplaceno
               </label>
-              <button type="submit" class="btn btn-sm btn-custom2">Uložit</button>
+              <button type="submit" class="btn btn-custom2">
+                <i class="icon-save"></i> Uložit
+              </button>
             </form>
 
             {% if user != request.user %}
-              <input type="checkbox" name="user_ids_to_delete" value="{{ user.id }}">
+              <!-- Tlačítko Upravit -->
+              <a href="{% url 'admin_edit_user' user.id %}" class="btn btn-outline-primary btn-sm">
+                <i class="icon-edit"></i> Upravit
+              </a>
+
+              <!-- Tlačítko Smazat -->
               <form method="post" action="{% url 'delete_user' user.id %}" onsubmit="return confirmSingleDelete();">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-custom">Smazat</button>
+                <input type="hidden" name="user_ids_to_delete" value="{{ user.id }}">
+                <button type="submit" class="btn btn-custom">
+                  <i class="icon-delete"></i> Smazat
+                </button>
               </form>
             {% endif %}
           </div>
@@ -42,11 +53,25 @@
     </ul>
 
     <h4>Běžní uživatelé</h4>
+
+    <!-- Vybrat vše -->
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" id="select-all" onclick="toggleAllUsers(this)">
+      <label for="select-all" class="form-check-label">Vybrat všechny</label>
+    </div>
+
     <ul class="list-group mb-4">
       {% for user in regular_users %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
+          <!-- Checkbox pro hromadné mazání -->
+          <div class="form-check me-3">
+            <input class="form-check-input" type="checkbox" name="user_ids_to_delete" value="{{ user.id }}">
+          </div>
+
           {{ user.username }} ({{ user.email }})
+
           <div class="d-flex align-items-center gap-3">
+            <!-- Formulář zaplaceno -->
             <form method="post" action="{% url 'user_management' %}">
               {% csrf_token %}
               <input type="hidden" name="user_ids" value="{{ user.id }}">
@@ -54,14 +79,24 @@
                 <input type="checkbox" name="paid_{{ user.id }}" {% if user.membership_paid %}checked{% endif %}>
                 Zaplaceno
               </label>
-              <button type="submit" class="btn btn-custom2">Uložit</button>
+              <button type="submit" class="btn btn-custom2">
+                <i class="icon-save"></i> Uložit
+              </button>
             </form>
 
             {% if user != request.user %}
-              <input type="checkbox" name="user_ids_to_delete" value="{{ user.id }}">
+              <!-- Tlačítko Upravit -->
+              <a href="{% url 'admin_edit_user' user.id %}" class="btn btn-outline-primary btn-sm">
+                <i class="icon-edit"></i> Upravit
+              </a>
+
+              <!-- Tlačítko Smazat -->
               <form method="post" action="{% url 'delete_user' user.id %}" onsubmit="return confirmSingleDelete();">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-custom">Smazat</button>
+                <input type="hidden" name="user_ids_to_delete" value="{{ user.id }}">
+                <button type="submit" class="btn btn-custom">
+                  <i class="icon-delete"></i> Smazat
+                </button>
               </form>
             {% endif %}
           </div>
@@ -72,11 +107,12 @@
     </ul>
 
     <button type="submit" class="btn btn-custom" onclick="return confirmBulkDelete();">
-      Smazat vybrané
+      <i class="icon-delete"></i> Smazat vybrané
     </button>
   </form>
 </div>
 {% endblock %}
+
 {% block extra_script %}
 <script src="{% static 'js/users.js' %}"></script>
 {% endblock extra_script %}
